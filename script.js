@@ -4,14 +4,16 @@ function Convert1() {
 	const paths = input.split("\n");
 	const formattedPaths = paths.map((path, index) => {
 	  if (path.trim()) {
+		path = path.replace(/"/g, '');
 		return index === paths.length - 1 ? `"${path}"` : `"${path}",`;
 	  }
 	  return path;
 	}).join("");
-  
+
 	const output = "Get-AuthenticodeSignature -ErrorAction 'Continue' -FilePath " + formattedPaths + " | Select-Object @{Name='Signature Status';Expression={$_.Status}},@{Name='File Path';Expression={$_.Path}},@{Name='System File';Expression={$_.IsOSBinary}},@{Name='Subject';Expression={$_.SignerCertificate.Subject}} | Out-GridView";
 	document.getElementById("output1").value = output;
-  }
+}
+
   
 function CopyToClipboard1() {
 	const output = document.getElementById("output1");
